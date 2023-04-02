@@ -10,6 +10,8 @@ void close_file(file_t *file)
 {
 	if (file->script != NULL)
 		fclose(file->script);
+	if (file->buf != NULL)
+		free(file->buf);
 	if (file != NULL)
 		free(file);
 }

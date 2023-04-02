@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#define BUFFER_SIZE 128
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -44,10 +45,18 @@ typedef struct file_s
 {
 	FILE *script;
 	unsigned int linenum;
+        char *buf;
 
 }file_t;
 
+extern int element;
+
 file_t *open_file(char *filename);
 void close_file(file_t *file);
+stack_t **create_stack();
+void free_stack(stack_t *head);
+stack_t *push_stack(stack_t **stack, int n);
+instruction_t parse_line(file_t *file);
+
 
 #endif

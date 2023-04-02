@@ -25,6 +25,13 @@ file_t *open_file(char *filename)
 		close_file(new);
 		return (NULL);
 	}
-	new->linenum = 1;
+	new->buf = malloc(sizeof(char) * BUFFER_SIZE);
+	if (!new->buf)
+	{
+		fprintf(stderr, "Error: Malloc failed\n");
+		close_file(new);
+		return (NULL);
+	}
+	new->linenum = 0;
 	return (new);
 }
