@@ -11,6 +11,6 @@
 void error_out(FILE *file, stack_t **stack)
 {
 	free_stack(stack);
-	fclose(file);
+	close_file(file);
 	return;
 }

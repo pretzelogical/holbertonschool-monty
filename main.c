@@ -21,14 +21,13 @@ int main(int argc, char **argv)
 	
 	file = open_file(argv[1]);
 	if (file == NULL)
-	{
-		fclose(file);
 		exit(EXIT_FAILURE);
-	}
+
 	get_line(file);
 	instruction = parse_line(file->buf);
 	while (instruction.status != 's')
 	{
+
 		if (instruction.status == 'u')
 		{
 			fprintf(stderr, "L<%d>: unknown instruction <%s>\n",
@@ -36,10 +35,8 @@ int main(int argc, char **argv)
 			error_out(file, stack);
 			exit(EXIT_FAILURE);
 		}
-		value = instruction.n; /* we have to use an external int instead
-								of putting it in the struct because betty
-								said */
 		/* execute function here */
+		
 		get_line(file);
 		instruction = parse_line(file->buf);
 	}
