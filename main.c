@@ -10,7 +10,7 @@
 int main(int argc, char **argv)
 {
 	file_t *file;
-	instruction_t instruction;
+	parsed_line_t instruction;
 	stack_t **stack;
 
 	if (argc != 2)
@@ -23,8 +23,9 @@ int main(int argc, char **argv)
 	if (file == NULL)
 		exit(EXIT_FAILURE);
 	
-	instruction = parse_line(fgets(file->buf, BUFFER_SIZE, file->script));
-	while (instruction.opcode != NULL)
+	get_line(file);
+	instruction = parse_line(file->buf);
+	while ()
 	{
 		if (instruction.f == NULL)
 		{
@@ -32,7 +33,8 @@ int main(int argc, char **argv)
 			file->linenum + 1, instruction.opcode);
 
 		}
-		instruction.f(**stack)
+		instruction.f(stack, file->linenum);
+		instruction = parse_line(fgets(file->buf, BUFFER_SIZE, file->script));
 	}
 
 	free_stack(*stack);
