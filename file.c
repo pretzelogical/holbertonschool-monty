@@ -32,6 +32,13 @@ file_t *open_file(char *filename)
 		close_file(new);
 		return (NULL);
 	}
+	new->status = malloc(sizeof(char));
+	if (!new->status)
+	{
+		fprintf(stderr, "Error: Malloc failed\n");
+		close_file(new);
+		return (NULL);
+	}
 	new->linenum = 0;
 	return (new);
 }
@@ -48,6 +55,8 @@ void close_file(file_t *file)
 		fclose(file->script);
 	if (file->buf != NULL)
 		free(file->buf);
+	if (file->status != NULL)
+		free(file->status);
 	if (file != NULL)
 		free(file);
 }

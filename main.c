@@ -21,20 +21,27 @@ int main(int argc, char **argv)
 	
 	file = open_file(argv[1]);
 	if (file == NULL)
+	{
+		fclose(file);
 		exit(EXIT_FAILURE);
-	
+	}
 	get_line(file);
 	instruction = parse_line(file->buf);
-	while ()
+	while (instruction.status != 's')
 	{
-		if (instruction.f == NULL)
+		if (instruction.status == 'u')
 		{
 			fprintf(stderr, "L<%d>: unknown instruction <%s>\n",
-			file->linenum + 1, instruction.opcode);
-
+				file->linenum);
+			error_out(file, stack);
+			exit(EXIT_FAILURE);
 		}
-		instruction.f(stack, file->linenum);
-		instruction = parse_line(fgets(file->buf, BUFFER_SIZE, file->script));
+		value = instruction.n; /* we have to use an external int instead
+								of putting it in the struct because betty
+								said */
+		/* execute function here */
+		get_line(file);
+		instruction = parse_line(file->buf);
 	}
 
 	free_stack(*stack);

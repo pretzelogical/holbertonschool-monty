@@ -41,20 +41,20 @@ typedef struct instruction_s
  * @script: pointer to currently open file
  * @linenum: current line number (starting at 1)
  * @buf: current buffer of line
+ * @status: status of get_line operation
 */
 typedef struct file_s
 {
 	FILE *script;
 	unsigned int linenum;
 	char *buf;
-
+	char *status;
 }file_t;
 
 /**
  * struct parsed_line_s- holds instruction and other data 
  * after line has been parsed
  * @op: instruction that was parsed
- * @n: number that was parsed
  * @status: char representing if parsing was successful
  * c = successfully parsed and continue
  * s = successfully parsed and stop
@@ -63,10 +63,10 @@ typedef struct file_s
 typedef struct parsed_line_s
 {
 	instruction_t op;
-	int n;
 	char status;
 }parsed_line_t;
 
+extern int value;
 
 file_t *open_file(char *filename);
 void close_file(file_t *file);
@@ -75,6 +75,7 @@ void free_stack(stack_t *head);
 stack_t *push_stack(stack_t **stack, int n);
 parsed_line_t parse_line(char *buf);
 void get_line(file_t *file);
+void error_out(FILE *file, stack_t **stack);
 
 
 #endif
